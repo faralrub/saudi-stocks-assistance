@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saudi Stock Monitor - Real-time Stock Tracking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pagesCss/saudiStockPalette.css">
+    <link rel="stylesheet" href="pagesCss/stockMonitor.css">
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -15,36 +18,38 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            font-family: var(--font-primary);
+            background: var(--gradient-card);
             min-height: 100vh;
         }
         
         .back-button {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 25px;
+            top: var(--space-lg);
+            left: var(--space-lg);
+            background: var(--glass-emerald);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-medium);
             cursor: pointer;
             font-size: 14px;
             font-weight: 600;
-            color: #333;
+            color: var(--saudi-emerald);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            gap: var(--space-sm);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-medium);
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
         
         .back-button:hover {
-            background: white;
+            background: var(--saudi-emerald);
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-medium);
         }
         
         .back-icon {
@@ -54,81 +59,107 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 100px 20px 40px 20px;
+            padding: 100px var(--space-lg) var(--space-xl) var(--space-lg);
         }
         
         .header {
             text-align: center;
-            color: white;
-            margin-bottom: 40px;
+            color: var(--saudi-emerald);
+            margin-bottom: var(--space-xl);
+            background: var(--gradient-card);
+            padding: var(--space-xl);
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--saudi-silver);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(212, 175, 55, 0.1) 50%, transparent 70%);
+            animation: shimmer 4s infinite;
         }
         
         .header h1 {
             font-size: 48px;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: var(--space-md);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-secondary);
+            position: relative;
+            z-index: 1;
         }
         
         .header p {
             font-size: 20px;
             opacity: 0.9;
+            color: var(--saudi-charcoal);
+            position: relative;
+            z-index: 1;
         }
         
         .stock-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
         }
         
         .stock-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
+            background: var(--gradient-card);
+            border-radius: var(--radius-large);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-medium);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-medium);
             position: relative;
             overflow: hidden;
+            border: 1px solid var(--saudi-silver);
         }
         
         .stock-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-heavy);
+            border-color: var(--saudi-gold);
         }
         
         .stock-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: var(--space-lg);
         }
         
         .stock-info h3 {
             font-size: 24px;
-            color: #333;
+            color: var(--saudi-emerald);
             margin-bottom: 5px;
             font-weight: 700;
         }
         
         .stock-symbol {
             font-size: 16px;
-            color: #666;
+            color: var(--saudi-charcoal);
             font-weight: 600;
         }
         
         .stock-price {
             font-size: 32px;
             font-weight: 700;
-            color: #333;
-            margin-bottom: 10px;
+            color: var(--saudi-onyx);
+            margin-bottom: var(--space-sm);
         }
         
         .price-change {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
         }
         
         .change-amount {
@@ -139,47 +170,57 @@
         .change-percent {
             font-size: 16px;
             font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 4px var(--space-sm);
+            border-radius: var(--radius-small);
         }
         
         .positive {
-            color: #00c853;
+            color: var(--saudi-positive);
+        }
+        
+        .positive .change-percent {
+            background: rgba(5, 150, 105, 0.1);
         }
         
         .negative {
-            color: #f44336;
+            color: var(--saudi-negative);
+        }
+        
+        .negative .change-percent {
+            background: rgba(220, 38, 38, 0.1);
         }
         
         .stock-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 15px;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
         }
         
         .stock-details:first-of-type {
-            margin-top: 20px;
+            margin-top: var(--space-lg);
         }
         
         .detail-item {
             text-align: center;
-            padding: 12px 8px;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
+            padding: var(--space-sm) var(--space-xs);
+            background: var(--saudi-emerald-fade);
+            border-radius: var(--radius-medium);
+            border: 1px solid var(--saudi-emerald-fade);
         }
         
         .detail-label {
             font-size: 11px;
-            color: #666;
+            color: var(--saudi-charcoal);
             margin-bottom: 4px;
             text-transform: uppercase;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
         
         .detail-value {
             font-size: 14px;
-            color: #333;
+            color: var(--saudi-onyx);
             font-weight: 600;
         }
         
@@ -187,9 +228,9 @@
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid var(--saudi-silver);
             border-radius: 50%;
-            border-top-color: #fff;
+            border-top-color: var(--saudi-emerald);
             animation: spin 1s ease-in-out infinite;
         }
         
@@ -199,47 +240,53 @@
         
         .refresh-button {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            bottom: var(--space-xl);
+            right: var(--space-xl);
+            background: var(--gradient-gold);
+            color: var(--saudi-onyx);
             border: none;
-            padding: 15px 20px;
-            border-radius: 50px;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-large);
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: var(--shadow-gold);
+            transition: var(--transition-medium);
             z-index: 1000;
         }
         
         .refresh-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 12px 35px var(--saudi-gold-glow);
         }
         
         .last-updated {
             text-align: center;
-            color: white;
-            margin-top: 20px;
+            color: var(--saudi-charcoal);
+            margin-top: var(--space-lg);
             font-size: 14px;
             opacity: 0.8;
+            background: var(--gradient-card);
+            padding: var(--space-md);
+            border-radius: var(--radius-medium);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--saudi-silver);
         }
         
         .error-message {
-            background: rgba(244, 67, 54, 0.9);
+            background: linear-gradient(135deg, var(--saudi-error) 0%, #DC2626 100%);
             color: white;
-            padding: 15px 25px;
-            border-radius: 15px;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-large);
             text-align: center;
-            margin: 20px 0;
+            margin: var(--space-lg) 0;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
         }
         
         @media (max-width: 768px) {
             .container {
-                padding: 80px 15px 30px 15px;
+                padding: 80px var(--space-md) var(--space-lg) var(--space-md);
             }
             
             .header h1 {
@@ -252,11 +299,11 @@
             
             .stock-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: var(--space-md);
             }
             
             .stock-card {
-                padding: 20px;
+                padding: var(--space-lg);
             }
             
             .stock-price {
@@ -264,11 +311,16 @@
             }
             
             .refresh-button {
-                bottom: 20px;
-                right: 20px;
-                padding: 12px 18px;
+                bottom: var(--space-lg);
+                right: var(--space-lg);
+                padding: var(--space-sm) var(--space-md);
                 font-size: 14px;
             }
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
     </style>
 </head>

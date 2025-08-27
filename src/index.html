@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saudi AI & Stock Monitor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pagesCss/saudiStockPalette.css">
     <style>
         * {
             margin: 0;
@@ -12,90 +14,141 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--font-primary);
+            background: var(--gradient-luxury);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Luxury background effects */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(212, 175, 55, 0.1) 50%, transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 60px 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            background: var(--gradient-card);
+            padding: var(--space-2xl) var(--space-xl);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-heavy);
             backdrop-filter: blur(20px);
             max-width: 500px;
             width: 90%;
+            border: 1px solid var(--saudi-silver);
+            position: relative;
+            z-index: 1;
+            transition: var(--transition-medium);
+        }
+        
+        .container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(15, 15, 15, 0.3);
         }
         
         .logo {
             font-size: 48px;
-            margin-bottom: 20px;
+            margin-bottom: var(--space-lg);
             display: block;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
         }
 
         h1 {
-            color: #333;
+            color: var(--saudi-emerald);
             font-size: 32px;
-            margin-bottom: 10px;
+            margin-bottom: var(--space-sm);
             font-weight: 700;
+            font-family: var(--font-secondary);
         }
         
         .subtitle {
-            color: #666;
+            color: var(--saudi-charcoal);
             font-size: 18px;
-            margin-bottom: 40px;
-            line-height: 1.5;
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+            opacity: 0.9;
         }
         
         .options {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: var(--space-lg);
         }
         
         .option {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-primary);
             color: white;
-            padding: 20px 30px;
-            border-radius: 15px;
+            padding: var(--space-lg) var(--space-xl);
+            border-radius: var(--radius-large);
             text-decoration: none;
             font-size: 18px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: var(--transition-medium);
+            box-shadow: var(--shadow-emerald);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .option:hover::before {
+            left: 100%;
         }
         
         .option:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 12px 35px rgba(11, 74, 63, 0.4);
         }
         
         .option.saudi-ai {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-primary);
         }
         
         .option.stock-monitor {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            box-shadow: 0 8px 25px rgba(240, 147, 251, 0.3);
+            background: var(--gradient-gold);
+            color: var(--saudi-onyx);
+            box-shadow: var(--shadow-gold);
         }
         
         .option.stock-monitor:hover {
-            box-shadow: 0 12px 35px rgba(240, 147, 251, 0.4);
+            box-shadow: 0 12px 35px var(--saudi-gold-glow);
         }
         
         .option-icon {
             font-size: 24px;
-            margin-right: 10px;
+            margin-right: var(--space-sm);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
         }
         
         @media (max-width: 768px) {
             .container {
-                padding: 40px 20px;
-                margin: 20px;
+                padding: var(--space-xl) var(--space-lg);
+                margin: var(--space-lg);
             }
             
             h1 {
@@ -107,7 +160,7 @@
             }
             
             .option {
-                padding: 18px 25px;
+                padding: var(--space-md) var(--space-lg);
                 font-size: 16px;
             }
         }

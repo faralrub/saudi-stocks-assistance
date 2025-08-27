@@ -1,0 +1,311 @@
+/* Saudi Stock Exchange - Luxury Color Palette System */
+
+:root {
+  /* Primary Luxury Colors */
+  --saudi-emerald: #0B4A3F;        /* Deep emerald green - primary brand */
+  --saudi-emerald-light: #0D5A4D;  /* Lighter emerald for hover states */
+  --saudi-emerald-dark: #083C33;   /* Darker emerald for text/borders */
+  --saudi-emerald-fade: rgba(11, 74, 63, 0.1); /* Transparent for backgrounds */
+  
+  /* Gold Accent Colors */
+  --saudi-gold: #D4AF37;           /* Rich gold - primary accent */
+  --saudi-gold-light: #E6C244;     /* Lighter gold for highlights */
+  --saudi-gold-dark: #B8941F;      /* Darker gold for pressed states */
+  --saudi-gold-fade: rgba(212, 175, 55, 0.15); /* Transparent gold */
+  --saudi-gold-glow: rgba(212, 175, 55, 0.3);  /* Glow effect */
+  
+  /* Sapphire Blue Colors */
+  --saudi-sapphire: #1E3A8A;       /* Dark sapphire blue - secondary brand */
+  --saudi-sapphire-light: #2563EB; /* Lighter sapphire for interactive */
+  --saudi-sapphire-dark: #1E40AF;  /* Darker sapphire for depth */
+  --saudi-sapphire-fade: rgba(30, 58, 138, 0.1); /* Transparent sapphire */
+  
+  /* Onyx Black Colors */
+  --saudi-onyx: #0F0F0F;           /* Pure onyx black - primary text */
+  --saudi-onyx-light: #1F1F1F;     /* Lighter onyx for backgrounds */
+  --saudi-onyx-medium: #2D2D2D;    /* Medium onyx for cards */
+  --saudi-onyx-fade: rgba(15, 15, 15, 0.8); /* Semi-transparent onyx */
+  
+  /* Neutral Luxury Colors */
+  --saudi-charcoal: #36454F;       /* Charcoal gray - secondary text */
+  --saudi-silver: #C0C0C0;         /* Silver - borders and dividers */
+  --saudi-platinum: #E5E4E2;       /* Platinum - light backgrounds */
+  --saudi-pearl: #F8F8F8;          /* Pearl white - pure backgrounds */
+  
+  /* Status Colors */
+  --saudi-success: #10B981;        /* Emerald success green */
+  --saudi-warning: #F59E0B;        /* Amber warning */
+  --saudi-error: #EF4444;          /* Crimson error */
+  --saudi-info: #3B82F6;           /* Blue info */
+  
+  /* Market Colors */
+  --saudi-positive: #059669;       /* Dark green for positive changes */
+  --saudi-negative: #DC2626;       /* Dark red for negative changes */
+  --saudi-neutral: #6B7280;        /* Gray for neutral states */
+  
+  /* Gradient Definitions */
+  --gradient-primary: linear-gradient(135deg, var(--saudi-emerald) 0%, var(--saudi-sapphire) 100%);
+  --gradient-luxury: linear-gradient(135deg, var(--saudi-emerald) 0%, var(--saudi-gold) 50%, var(--saudi-sapphire) 100%);
+  --gradient-gold: linear-gradient(135deg, var(--saudi-gold) 0%, var(--saudi-gold-light) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--saudi-onyx) 0%, var(--saudi-sapphire) 100%);
+  --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.9) 100%);
+  
+  /* Shadow System */
+  --shadow-soft: 0 2px 8px rgba(15, 15, 15, 0.1);
+  --shadow-medium: 0 4px 16px rgba(15, 15, 15, 0.15);
+  --shadow-heavy: 0 8px 32px rgba(15, 15, 15, 0.2);
+  --shadow-gold: 0 4px 16px var(--saudi-gold-glow);
+  --shadow-emerald: 0 4px 16px rgba(11, 74, 63, 0.2);
+  
+  /* Border Radius */
+  --radius-small: 8px;
+  --radius-medium: 12px;
+  --radius-large: 16px;
+  --radius-xl: 24px;
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'Poppins', var(--font-primary);
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+}
+
+/* Utility Classes for Colors */
+.text-emerald { color: var(--saudi-emerald); }
+.text-gold { color: var(--saudi-gold); }
+.text-sapphire { color: var(--saudi-sapphire); }
+.text-onyx { color: var(--saudi-onyx); }
+.text-charcoal { color: var(--saudi-charcoal); }
+
+.bg-emerald { background-color: var(--saudi-emerald); }
+.bg-gold { background-color: var(--saudi-gold); }
+.bg-sapphire { background-color: var(--saudi-sapphire); }
+.bg-onyx { background-color: var(--saudi-onyx); }
+.bg-pearl { background-color: var(--saudi-pearl); }
+
+.border-emerald { border-color: var(--saudi-emerald); }
+.border-gold { border-color: var(--saudi-gold); }
+.border-sapphire { border-color: var(--saudi-sapphire); }
+.border-silver { border-color: var(--saudi-silver); }
+
+/* Status Text Colors */
+.text-positive { color: var(--saudi-positive); }
+.text-negative { color: var(--saudi-negative); }
+.text-neutral { color: var(--saudi-neutral); }
+.text-success { color: var(--saudi-success); }
+.text-warning { color: var(--saudi-warning); }
+.text-error { color: var(--saudi-error); }
+.text-info { color: var(--saudi-info); }
+
+/* Gradient Backgrounds */
+.bg-gradient-primary { background: var(--gradient-primary); }
+.bg-gradient-luxury { background: var(--gradient-luxury); }
+.bg-gradient-gold { background: var(--gradient-gold); }
+.bg-gradient-dark { background: var(--gradient-dark); }
+.bg-gradient-card { background: var(--gradient-card); }
+
+/* Shadow Utilities */
+.shadow-soft { box-shadow: var(--shadow-soft); }
+.shadow-medium { box-shadow: var(--shadow-medium); }
+.shadow-heavy { box-shadow: var(--shadow-heavy); }
+.shadow-gold { box-shadow: var(--shadow-gold); }
+.shadow-emerald { box-shadow: var(--shadow-emerald); }
+
+/* Interactive States */
+.hover-emerald:hover { background-color: var(--saudi-emerald-light); }
+.hover-gold:hover { background-color: var(--saudi-gold-light); }
+.hover-sapphire:hover { background-color: var(--saudi-sapphire-light); }
+
+.focus-emerald:focus { box-shadow: 0 0 0 3px var(--saudi-emerald-fade); }
+.focus-gold:focus { box-shadow: 0 0 0 3px var(--saudi-gold-fade); }
+.focus-sapphire:focus { box-shadow: 0 0 0 3px var(--saudi-sapphire-fade); }
+
+/* Animation Utilities */
+.transition-fast { transition: all 0.2s ease; }
+.transition-medium { transition: all 0.3s ease; }
+.transition-slow { transition: all 0.5s ease; }
+
+/* Glass Morphism Effects */
+.glass-emerald {
+  background: rgba(11, 74, 63, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.glass-gold {
+  background: rgba(212, 175, 55, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.glass-sapphire {
+  background: rgba(30, 58, 138, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(30, 58, 138, 0.2);
+}
+
+/* Market Specific Colors */
+.stock-positive {
+  color: var(--saudi-positive);
+  background: rgba(5, 150, 105, 0.1);
+}
+
+.stock-negative {
+  color: var(--saudi-negative);
+  background: rgba(220, 38, 38, 0.1);
+}
+
+.stock-neutral {
+  color: var(--saudi-neutral);
+  background: rgba(107, 114, 128, 0.1);
+}
+
+/* Button Styles */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-medium);
+  font-weight: 600;
+  transition: var(--transition-medium);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.btn-gold {
+  background: var(--gradient-gold);
+  color: var(--saudi-onyx);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-medium);
+  font-weight: 600;
+  transition: var(--transition-medium);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--saudi-gold-glow);
+}
+
+/* Card Styles */
+.card-luxury {
+  background: var(--gradient-card);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--saudi-silver);
+  padding: var(--space-lg);
+  transition: var(--transition-medium);
+}
+
+.card-luxury:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-heavy);
+}
+
+.card-dark {
+  background: var(--gradient-dark);
+  color: white;
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-heavy);
+  padding: var(--space-lg);
+  transition: var(--transition-medium);
+}
+
+.card-dark:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(15, 15, 15, 0.3);
+}
+
+/* Input Styles */
+.input-luxury {
+  background: var(--saudi-pearl);
+  border: 2px solid var(--saudi-silver);
+  border-radius: var(--radius-medium);
+  padding: 12px 16px;
+  font-family: var(--font-primary);
+  transition: var(--transition-medium);
+}
+
+.input-luxury:focus {
+  outline: none;
+  border-color: var(--saudi-emerald);
+  box-shadow: 0 0 0 3px var(--saudi-emerald-fade);
+}
+
+/* Table Styles */
+.table-luxury {
+  background: var(--saudi-pearl);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.table-luxury th {
+  background: var(--gradient-primary);
+  color: white;
+  font-weight: 600;
+  padding: var(--space-md);
+}
+
+.table-luxury td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--saudi-platinum);
+}
+
+.table-luxury tr:hover {
+  background: var(--saudi-emerald-fade);
+}
+
+/* Loading States */
+.loading-gold {
+  border: 2px solid var(--saudi-silver);
+  border-top: 2px solid var(--saudi-gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-emerald {
+  border: 2px solid var(--saudi-silver);
+  border-top: 2px solid var(--saudi-emerald);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    --space-lg: 20px;
+    --space-xl: 24px;
+    --space-2xl: 32px;
+    --radius-large: 12px;
+    --radius-xl: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --radius-medium: 8px;
+    --radius-large: 10px;
+  }
+}

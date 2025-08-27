@@ -1,0 +1,243 @@
+/* Saudi Stock Exchange - Color Swatches Reference */
+
+/* This file is for development reference only - displays all color swatches */
+
+:root {
+  /* Import the main palette */
+  --saudi-emerald: #0B4A3F;
+  --saudi-emerald-light: #0D5A4D;
+  --saudi-emerald-dark: #083C33;
+  --saudi-emerald-fade: rgba(11, 74, 63, 0.1);
+  
+  --saudi-gold: #D4AF37;
+  --saudi-gold-light: #E6C244;
+  --saudi-gold-dark: #B8941F;
+  --saudi-gold-fade: rgba(212, 175, 55, 0.15);
+  --saudi-gold-glow: rgba(212, 175, 55, 0.3);
+  
+  --saudi-sapphire: #1E3A8A;
+  --saudi-sapphire-light: #2563EB;
+  --saudi-sapphire-dark: #1E40AF;
+  --saudi-sapphire-fade: rgba(30, 58, 138, 0.1);
+  
+  --saudi-onyx: #0F0F0F;
+  --saudi-onyx-light: #1F1F1F;
+  --saudi-onyx-medium: #2D2D2D;
+  --saudi-onyx-fade: rgba(15, 15, 15, 0.8);
+  
+  --saudi-charcoal: #36454F;
+  --saudi-silver: #C0C0C0;
+  --saudi-platinum: #E5E4E2;
+  --saudi-pearl: #F8F8F8;
+  
+  --saudi-positive: #059669;
+  --saudi-negative: #DC2626;
+  --saudi-neutral: #6B7280;
+  
+  --saudi-success: #10B981;
+  --saudi-warning: #F59E0B;
+  --saudi-error: #EF4444;
+  --saudi-info: #3B82F6;
+}
+
+/* Color Swatch Display Classes */
+.color-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background: #f5f5f5;
+  font-family: 'Inter', sans-serif;
+}
+
+.swatch-group {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.swatch-group h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.swatch-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+}
+
+.color-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  margin-right: 12px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-info {
+  flex: 1;
+}
+
+.color-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.color-hex {
+  font-size: 11px;
+  color: #666;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Primary Colors */
+.swatch-emerald .color-preview { background: var(--saudi-emerald); }
+.swatch-emerald-light .color-preview { background: var(--saudi-emerald-light); }
+.swatch-emerald-dark .color-preview { background: var(--saudi-emerald-dark); }
+
+.swatch-gold .color-preview { background: var(--saudi-gold); }
+.swatch-gold-light .color-preview { background: var(--saudi-gold-light); }
+.swatch-gold-dark .color-preview { background: var(--saudi-gold-dark); }
+
+.swatch-sapphire .color-preview { background: var(--saudi-sapphire); }
+.swatch-sapphire-light .color-preview { background: var(--saudi-sapphire-light); }
+.swatch-sapphire-dark .color-preview { background: var(--saudi-sapphire-dark); }
+
+.swatch-onyx .color-preview { background: var(--saudi-onyx); }
+.swatch-onyx-light .color-preview { background: var(--saudi-onyx-light); }
+.swatch-onyx-medium .color-preview { background: var(--saudi-onyx-medium); }
+
+/* Neutral Colors */
+.swatch-charcoal .color-preview { background: var(--saudi-charcoal); }
+.swatch-silver .color-preview { background: var(--saudi-silver); }
+.swatch-platinum .color-preview { background: var(--saudi-platinum); }
+.swatch-pearl .color-preview { background: var(--saudi-pearl); }
+
+/* Status Colors */
+.swatch-positive .color-preview { background: var(--saudi-positive); }
+.swatch-negative .color-preview { background: var(--saudi-negative); }
+.swatch-neutral .color-preview { background: var(--saudi-neutral); }
+
+.swatch-success .color-preview { background: var(--saudi-success); }
+.swatch-warning .color-preview { background: var(--saudi-warning); }
+.swatch-error .color-preview { background: var(--saudi-error); }
+.swatch-info .color-preview { background: var(--saudi-info); }
+
+/* Gradient Previews */
+.gradient-preview {
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-primary { background: linear-gradient(135deg, var(--saudi-emerald) 0%, var(--saudi-sapphire) 100%); }
+.gradient-luxury { background: linear-gradient(135deg, var(--saudi-emerald) 0%, var(--saudi-gold) 50%, var(--saudi-sapphire) 100%); }
+.gradient-gold { background: linear-gradient(135deg, var(--saudi-gold) 0%, var(--saudi-gold-light) 100%); }
+.gradient-dark { background: linear-gradient(135deg, var(--saudi-onyx) 0%, var(--saudi-sapphire) 100%); }
+.gradient-card { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.9) 100%); }
+
+/* Usage Examples */
+.usage-examples {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.usage-examples h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.example-button {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.example-btn-primary {
+  background: linear-gradient(135deg, var(--saudi-emerald) 0%, var(--saudi-sapphire) 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(11, 74, 63, 0.2);
+}
+
+.example-btn-gold {
+  background: linear-gradient(135deg, var(--saudi-gold) 0%, var(--saudi-gold-light) 100%);
+  color: var(--saudi-onyx);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+}
+
+.example-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.9) 100%);
+  border: 1px solid var(--saudi-silver);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px;
+  box-shadow: 0 4px 16px rgba(15, 15, 15, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .color-swatches {
+    grid-template-columns: 1fr;
+    padding: 15px;
+  }
+  
+  .swatch-group {
+    padding: 15px;
+  }
+  
+  .example-button {
+    display: block;
+    text-align: center;
+    margin: 8px 0;
+  }
+}
+
+/* Show/Hide for Development */
+.show-swatches .color-swatches {
+  display: grid;
+}
+
+.hide-swatches .color-swatches {
+  display: none;
+}
+
+/* Add this class to any page to display color swatches */
+.dev-swatches {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--saudi-silver);
+}
+
+.dev-swatches:hover {
+  background: var(--saudi-emerald-fade);
+}
