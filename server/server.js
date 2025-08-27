@@ -11,7 +11,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 // CORS configuration for production
 const corsOptions = {
     origin: NODE_ENV === 'production' 
-        ? ['https://your-app-name.onrender.com', 'http://localhost:3000'] // Update with your actual Render URL
+        ? ['https://saudi-stocks-assistance.onrender.com', 'http://localhost:3000'] // Update with your actual Render URL
         : ['http://localhost:3000', 'http://127.0.0.1:3000'],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
