@@ -6,15 +6,33 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
-// Middleware
-app.use(cors({
-    origin: '*',
+// CORS configuration for production
+const corsOptions = {
+    origin: NODE_ENV === 'production' 
+        ? ['https://your-app-name.onrender.com', 'http://localhost:3000'] // Update with your actual Render URL
+        : ['http://localhost:3000', 'http://127.0.0.1:3000'],
     methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
+
+// Serve static files from src directory
 app.use(express.static(path.join(__dirname, '../src')));
+
+// Security headers for production
+if (NODE_ENV === 'production') {
+    app.use((req, res, next) => {
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.setHeader('X-Frame-Options', 'DENY');
+        res.setHeader('X-XSS-Protection', '1; mode=block');
+        next();
+    });
+}
 
 // DeepSeek API configuration
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
@@ -44,6 +62,13 @@ app.post('/api/chat', async (req, res) => {
             });
         }
 
+        // Validate input
+        if (!message || typeof message !== 'string' || message.trim().length === 0) {
+            return res.status(400).json({
+                error: 'Invalid message provided'
+            });
+        }
+
         // Prepare conversation context for Saudi Stock AI
         const systemPrompt = `You are Saudi Stock AI, a helpful and knowledgeable AI assistant focused on Saudi exchange. 
         You can help with various topics including stock analysis, stock price, stock prediction, stock forecast, stock past, etc...
@@ -66,7 +91,8 @@ app.post('/api/chat', async (req, res) => {
             headers: {
                 'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
                 'Content-Type': 'application/json'
-            }
+            },
+            timeout: 30000 // 30 second timeout
         });
 
         const aiResponse = response.data.choices[0].message.content;
@@ -78,16 +104,38 @@ app.post('/api/chat', async (req, res) => {
 
     } catch (error) {
         console.error('Chat API Error:', error);
-        res.status(500).json({ 
-            error: 'Failed to get response from Saudi Stock AI',
-            details: error.message 
-        });
+        
+        // Handle different types of errors
+        if (error.response) {
+            // API error response
+            res.status(500).json({ 
+                error: 'Failed to get response from Saudi Stock AI',
+                details: error.response.data?.error?.message || error.message 
+            });
+        } else if (error.request) {
+            // Network error
+            res.status(503).json({ 
+                error: 'Network error - unable to reach AI service',
+                details: error.message 
+            });
+        } else {
+            // Other errors
+            res.status(500).json({ 
+                error: 'Internal server error',
+                details: error.message 
+            });
+        }
     }
 });
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'OK', timestamp: new Date().toISOString() });
+    res.json({ 
+        status: 'OK', 
+        timestamp: new Date().toISOString(),
+        environment: NODE_ENV,
+        apiConfigured: !!DEEPSEEK_API_KEY
+    });
 });
 
 // Function to generate comprehensive stock data with realistic values
@@ -286,6 +334,13 @@ app.get('/api/stock/:symbol', async (req, res) => {
     try {
         const { symbol } = req.params;
         
+        // Validate symbol
+        if (!symbol || typeof symbol !== 'string') {
+            return res.status(400).json({
+                error: 'Invalid stock symbol provided'
+            });
+        }
+        
         // Generate comprehensive mock data for the stock
         const mockData = generateComprehensiveStockData(symbol);
         
@@ -299,7 +354,29 @@ app.get('/api/stock/:symbol', async (req, res) => {
     }
 });
 
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({
+        error: 'Route not found',
+        message: `The route ${req.originalUrl} was not found on this server`
+    });
+});
+
+// Global error handler
+app.use((error, req, res, next) => {
+    console.error('Unhandled error:', error);
+    res.status(500).json({
+        error: 'Internal server error',
+        message: NODE_ENV === 'development' ? error.message : 'Something went wrong'
+    });
+});
+
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Saudi Stock AI server is ready!`);
+    console.log(`🚀 Saudi Stock Exchange server is running!`);
+    console.log(`📍 Environment: ${NODE_ENV}`);
+    console.log(`🌐 Server running on port ${PORT}`);
+    console.log(`🔗 Local URL: http://localhost:${PORT}`);
+    console.log(`🤖 Saudi Stock AI server is ready!`);
+    console.log(`📈 Stock Monitor is ready!`);
+    console.log(`🔑 API Configured: ${DEEPSEEK_API_KEY ? 'Yes' : 'No'}`);
 });
