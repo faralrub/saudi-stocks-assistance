@@ -22,7 +22,7 @@ const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 
 // Routes
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/../src/index.html');
+    res.sendFile(path.join(__dirname, '../src/index.html'));
 });
 
 app.get('/saudi-ai', (req, res) => {
