@@ -1,0 +1,170 @@
+import React, { useState, useRef, useEffect } from 'react';
+import './saudiAi.css';
+
+const SaudiAI = () => {
+    const [messages, setMessages] = useState([]);
+    const [inputMessage, setInputMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    const handleSendMessage = async (e) => {
+        e.preventDefault();
+        if (!inputMessage.trim() || isLoading) return;
+
+        const userMessage = {
+            id: Date.now(),
+            text: inputMessage,
+            sender: 'user',
+            timestamp: new Date().toLocaleTimeString()
+        };
+
+        setMessages(prev => [...prev, userMessage]);
+        setInputMessage('');
+        setIsLoading(true);
+        setError('');
+
+        try {
+            const conversationHistory = messages.map(msg => ({
+                role: msg.sender === 'user' ? 'user' : 'assistant',
+                content: msg.text
+            }));
+
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: inputMessage,
+                    conversationHistory
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                const aiMessage = {
+                    id: Date.now() + 1,
+                    text: data.response,
+                    sender: 'ai',
+                    timestamp: new Date().toLocaleTimeString()
+                };
+                setMessages(prev => [...prev, aiMessage]);
+            } else {
+                throw new Error(data.error || 'Failed to get response');
+            }
+        } catch (err) {
+            setError(err.message);
+            const errorMessage = {
+                id: Date.now() + 1,
+                text: 'Sorry, I encountered an error. Please try again.',
+                sender: 'ai',
+                timestamp: new Date().toLocaleTimeString(),
+                isError: true
+            };
+            setMessages(prev => [...prev, errorMessage]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            handleSendMessage(e);
+        }
+    };
+
+    return (
+        <div className="saudi-ai-container">
+            <div className="chat-header">
+                <div className="header-content">
+                    <div className="ai-avatar">
+                        <span className="ai-icon">🤖</span>
+                    </div>
+                    <div className="header-text">
+                        <h1>Saudi Stock AI</h1>
+                        <p>Your intelligent assistant for Saudi Exchange stocks</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="chat-messages">
+                {messages.length === 0 && (
+                    <div className="welcome-message">
+                        <div className="welcome-icon">🇸🇦</div>
+                        <h2>Welcome to Saudi Stock AI</h2>
+                        <p>I'm here to help you with Saudi Exchange stocks, market analysis, stock predictions, and financial insights. How can I assist you today?</p>
+                    </div>
+                )}
+                
+                {messages.map((message) => (
+                    <div
+                        key={message.id}
+                        className={`message ${message.sender === 'user' ? 'user-message' : 'ai-message'} ${message.isError ? 'error-message' : ''}`}
+                    >
+                        <div className="message-content">
+                            <div className="message-text">{message.text}</div>
+                            <div className="message-timestamp">{message.timestamp}</div>
+                        </div>
+                    </div>
+                ))}
+                
+                {isLoading && (
+                    <div className="message ai-message">
+                        <div className="message-content">
+                            <div className="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                
+                <div ref={messagesEndRef} />
+            </div>
+
+            {error && (
+                <div className="error-banner">
+                    <span>⚠️ {error}</span>
+                </div>
+            )}
+
+            <form className="chat-input-form" onSubmit={handleSendMessage}>
+                <div className="input-container">
+                    <textarea
+                        value={inputMessage}
+                        onChange={(e) => setInputMessage(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder="Ask me anything about Stocks on Saudi Exchange..."
+                        disabled={isLoading}
+                        rows="1"
+                        className="chat-input"
+                    />
+                    <button
+                        type="submit"
+                        disabled={!inputMessage.trim() || isLoading}
+                        className="send-button"
+                    >
+                        {isLoading ? (
+                            <span className="loading-spinner"></span>
+                        ) : (
+                            <span>➤</span>
+                        )}
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+};
+
+export default SaudiAI;

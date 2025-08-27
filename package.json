@@ -1,0 +1,31 @@
+{
+  "name": "saudi-stocks-assistance",
+  "version": "1.0.0",
+  "description": "Saudi Stock AI Assistant and Exchange Monitor Application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "client": "cd src && npm start",
+    "build": "cd src && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "saudi-stock-ai",
+    "stock-assistant",
+    "deepseek",
+    "stock-monitor",
+    "saudi-exchange",
+    "stock-analysis"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

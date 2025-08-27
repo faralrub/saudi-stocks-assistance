@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saudi Stock Monitor - Real-time Stock Tracking</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .back-icon {
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        
+        .stock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .stock-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stock-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .stock-info h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        
+        .stock-symbol {
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .stock-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .price-change {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .change-amount {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .change-percent {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+        
+        .positive {
+            color: #00c853;
+        }
+        
+        .negative {
+            color: #f44336;
+        }
+        
+        .stock-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .stock-details:first-of-type {
+            margin-top: 20px;
+        }
+        
+        .detail-item {
+            text-align: center;
+            padding: 12px 8px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        
+        .detail-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .detail-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .refresh-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .refresh-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+        
+        .last-updated {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .error-message {
+            background: rgba(244, 67, 54, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 80px 15px 30px 15px;
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .header p {
+                font-size: 18px;
+            }
+            
+            .stock-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .stock-card {
+                padding: 20px;
+            }
+            
+            .stock-price {
+                font-size: 28px;
+            }
+            
+            .refresh-button {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 18px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-button">
+        <span class="back-icon">←</span>
+        Back to Home
+    </a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>📈 Saudi Exchange Monitor</h1>
+            <p>Real-time Saudi stock tracking and market analysis</p>
+        </div>
+        
+        <div id="root"></div>
+        
+        <div class="last-updated" id="lastUpdated"></div>
+    </div>
+    
+    <button class="refresh-button" onclick="window.refreshStocks()">
+        🔄 Refresh Data
+    </button>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Hard-coded Saudi stocks with their Yahoo Finance symbols
+        const SAUDI_STOCKS = [
+            { symbol: '2222.SR', name: 'Saudi Aramco', displayName: 'Saudi Aramco' },
+            { symbol: '1180.SR', name: 'Saudi National Bank', displayName: 'SNB' },
+            { symbol: '1010.SR', name: 'Riyad Bank', displayName: 'Riyad Bank' },
+            { symbol: '3020.SR', name: 'Saudi Research and Media Group', displayName: 'SRMG' },
+            { symbol: '7010.SR', name: 'Saudi Telecom Company', displayName: 'STC' }
+        ];
+        
+        const StockCard = ({ stock, data, loading, error }) => {
+            if (loading) {
+                return (
+                    <div className="stock-card">
+                        <div className="stock-header">
+                            <div className="stock-info">
+                                <h3>{stock.displayName}</h3>
+                                <div className="stock-symbol">{stock.symbol}</div>
+                            </div>
+                            <div className="loading-spinner"></div>
+                        </div>
+                        <div className="stock-price">Loading...</div>
+                    </div>
+                );
+            }
+            
+            if (error) {
+                return (
+                    <div className="stock-card">
+                        <div className="stock-header">
+                            <div className="stock-info">
+                                <h3>{stock.displayName}</h3>
+                                <div className="stock-symbol">{stock.symbol}</div>
+                            </div>
+                        </div>
+                        <div className="error-message">Failed to load data</div>
+                    </div>
+                );
+            }
+            
+            if (!data) return null;
+            
+            const isPositive = data.change >= 0;
+            const changeColor = isPositive ? 'positive' : 'negative';
+            const changeIcon = isPositive ? '📈' : '📉';
+            
+            return (
+                <div className="stock-card">
+                    <div className="stock-header">
+                        <div className="stock-info">
+                            <h3>{stock.displayName}</h3>
+                            <div className="stock-symbol">{stock.symbol}</div>
+                        </div>
+                        <div style={{ fontSize: '24px' }}>{changeIcon}</div>
+                    </div>
+                    
+                    <div className="stock-price">${data.price}</div>
+                    
+                    <div className="price-change">
+                        <span className={`change-amount ${changeColor}`}>
+                            {isPositive ? '+' : ''}{data.change}
+                        </span>
+                        <span className={`change-percent ${changeColor}`}>
+                            {isPositive ? '+' : ''}{data.changePercent}%
+                        </span>
+                    </div>
+                    
+                    <div className="stock-details">
+                        <div className="detail-item">
+                            <div className="detail-label">Market Cap</div>
+                            <div className="detail-value">{data.marketCap}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Volume</div>
+                            <div className="detail-value">{data.volume}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">High</div>
+                            <div className="detail-value">${data.high}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Low</div>
+                            <div className="detail-value">${data.low}</div>
+                        </div>
+                    </div>
+                    
+                    <div className="stock-details">
+                        <div className="detail-item">
+                            <div className="detail-label">P/E Ratio</div>
+                            <div className="detail-value">{data.peRatio}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">ROE</div>
+                            <div className="detail-value">{data.roe}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">ROA</div>
+                            <div className="detail-value">{data.roa}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Beta</div>
+                            <div className="detail-value">{data.beta}</div>
+                        </div>
+                    </div>
+                    
+                    <div className="stock-details">
+                        <div className="detail-item">
+                            <div className="detail-label">Profit Margin</div>
+                            <div className="detail-value">{data.profitMargin}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Operating Margin</div>
+                            <div className="detail-value">{data.operatingMargin}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Current Ratio</div>
+                            <div className="detail-value">{data.currentRatio}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Debt/Equity</div>
+                            <div className="detail-value">{data.debtToEquity}</div>
+                        </div>
+                    </div>
+                    
+                    <div className="stock-details">
+                        <div className="detail-item">
+                            <div className="detail-label">Dividend Yield</div>
+                            <div className="detail-value">{data.dividendYield}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Payout Ratio</div>
+                            <div className="detail-value">{data.payoutRatio}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Quick Ratio</div>
+                            <div className="detail-value">{data.quickRatio}</div>
+                        </div>
+                        <div className="detail-item">
+                            <div className="detail-label">Open</div>
+                            <div className="detail-value">${data.open}</div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        
+        const StockMonitor = () => {
+            const [stocksData, setStocksData] = useState({});
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState(null);
+            const [lastUpdated, setLastUpdated] = useState(null);
+            
+            const fetchStockData = async (symbol) => {
+                try {
+                    // Using our proxy endpoint to avoid CORS issues
+                    const response = await fetch(`/api/stock/${symbol}`);
+                    const data = await response.json();
+                    
+                    if (data.chart && data.chart.result && data.chart.result[0]) {
+                        const result = data.chart.result[0];
+                        const meta = result.meta;
+                        const indicators = result.indicators.quote[0];
+                        
+                        const stockData = {
+                            price: meta.regularMarketPrice?.toFixed(2) || 'N/A',
+                            change: (meta.regularMarketPrice - meta.previousClose)?.toFixed(2) || 'N/A',
+                            changePercent: (((meta.regularMarketPrice - meta.previousClose) / meta.previousClose) * 100)?.toFixed(2) || 'N/A',
+                            open: meta.regularMarketOpen?.toFixed(2) || 'N/A',
+                            previousClose: meta.previousClose?.toFixed(2) || 'N/A',
+                            volume: (indicators.volume?.[0] / 1000000)?.toFixed(2) + 'M' || 'N/A',
+                            marketCap: (meta.marketCap / 1000000000)?.toFixed(2) + 'B' || 'N/A',
+                            high: meta.regularMarketDayHigh?.toFixed(2) || 'N/A',
+                            low: meta.regularMarketDayLow?.toFixed(2) || 'N/A',
+                            peRatio: data.financialData?.forwardPE?.toFixed(2) || 'N/A',
+                            roe: data.financialData?.returnOnEquity?.toFixed(2) + '%' || 'N/A',
+                            roa: data.financialData?.returnOnAssets?.toFixed(2) + '%' || 'N/A',
+                            debtToEquity: data.financialData?.debtToEquity?.toFixed(2) || 'N/A',
+                            profitMargin: data.financialData?.profitMargins?.toFixed(2) + '%' || 'N/A',
+                            operatingMargin: data.financialData?.operatingMargins?.toFixed(2) + '%' || 'N/A',
+                            currentRatio: data.financialData?.currentRatio?.toFixed(2) || 'N/A',
+                            quickRatio: data.financialData?.quickRatio?.toFixed(2) || 'N/A',
+                            beta: data.keyStats?.beta?.toFixed(2) || 'N/A',
+                            dividendYield: data.financialData?.dividendYield?.toFixed(2) + '%' || 'N/A',
+                            payoutRatio: data.financialData?.payoutRatio?.toFixed(2) + '%' || 'N/A'
+                        };
+                        
+                        return stockData;
+                    }
+                    throw new Error('Invalid data format');
+                } catch (err) {
+                    console.error(`Error fetching ${symbol}:`, err);
+                    return null;
+                }
+            };
+            
+            const updateAllStocks = async () => {
+                setLoading(true);
+                setError(null);
+                
+                try {
+                    const newStocksData = {};
+                    
+                    for (const stock of SAUDI_STOCKS) {
+                        const data = await fetchStockData(stock.symbol);
+                        if (data) {
+                            newStocksData[stock.symbol] = data;
+                        }
+                    }
+                    
+                    setStocksData(newStocksData);
+                    setLastUpdated(new Date());
+                } catch (err) {
+                    setError('Failed to fetch stock data. Please try again.');
+                    console.error('Error updating stocks:', err);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            
+            useEffect(() => {
+                updateAllStocks();
+                
+                // Auto-refresh every 30 seconds
+                const interval = setInterval(updateAllStocks, 30000);
+                
+                return () => clearInterval(interval);
+            }, []);
+            
+            // Make refresh function globally available
+            window.refreshStocks = updateAllStocks;
+            
+            // Update last updated display
+            useEffect(() => {
+                if (lastUpdated) {
+                    document.getElementById('lastUpdated').textContent = 
+                        `Last updated: ${lastUpdated.toLocaleTimeString()}`;
+                }
+            }, [lastUpdated]);
+            
+            return (
+                <div>
+                    {error && <div className="error-message">{error}</div>}
+                    
+                    <div className="stock-grid">
+                        {SAUDI_STOCKS.map(stock => (
+                            <StockCard
+                                key={stock.symbol}
+                                stock={stock}
+                                data={stocksData[stock.symbol]}
+                                loading={loading}
+                                error={error}
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+        
+        const App = () => {
+            return <StockMonitor />;
+        };
+        
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
